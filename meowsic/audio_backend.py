@@ -19,6 +19,10 @@ def make_meow_track(beats, audio_length, fs):
     med_meow, _ = librosa.load(MEDMEOW, fs)
     low_meow, _ = librosa.load(LOWMEOW, fs)
 
+    high_meow = 0.5*high_meow/np.max(high_meow)
+    med_meow = 0.6*med_meow/np.max(med_meow)
+    low_meow = low_meow/np.max(low_meow)
+
     high_len = len(high_meow)
     med_len = len(med_meow)
     low_len = len(low_meow)
@@ -29,17 +33,17 @@ def make_meow_track(beats, audio_length, fs):
 
     beats_in_samples = np.round(beats*fs)
 
-    offset = int(low_len*0.75)
+    offset = int(low_len*0.5)
     for i in beats_in_samples[::2]:
         if int(i)-offset >= 0 and int(i)+low_len-offset < audio_length:
             bass_drum[int(i)-offset: int(i)+low_len-offset] = low_meow
 
-    offset = 0
+    offset = int(med_len*0.3)
     for i in beats_in_samples[1::2]:
         if int(i)-offset >= 0 and int(i)+med_len-offset < audio_length:
             snare_drum[int(i)-offset: int(i)+med_len-offset] = med_meow
 
-    offset = int(high_len*0)
+    offset = int(high_len*0.3)
     offbeats_in_samples = (beats_in_samples[:-1] + beats_in_samples[1:])/2
     for i in offbeats_in_samples:
         if int(i)-offset >= 0 and int(i)+high_len-offset < audio_length:
@@ -53,5 +57,5 @@ def add_meow_track_to_audio(audio_path, output_path):
     audio_length = len(y)
     beats_in_seconds = get_beats(y, fs)
     meow_track = make_meow_track(beats_in_seconds, audio_length, fs)
-    mix = y/np.max(y) + 0.5*meow_track/np.max(meow_track)
+    mix = y/np.max(y) + 0.4*meow_track/np.max(meow_track)
     librosa.output.write_wav(output_path, mix, fs)
