@@ -1,16 +1,45 @@
 # Import everything needed to edit video clips
 from moviepy.editor import *
 
+def main():
 
-length = input("Enter length of video: ")
+	input_file = open('./sampleinput.txt').read()
+	times = input_file.split(' ')
 
-# Get subclip from 0 to (length) seconds
-clip = VideoFileClip("catexample1.mp4").subclip(0,length)
+	#not too crazy
+	times = times.slice(0, 9)
 
-# Reduce the audio volume (volume x 0.8)
-clip = clip.volumex(0.8)
+	#hardcode num videos
+	num_videos = 4
 
-# Write the result to a file (many options available !)
-clip.write_videofile("catexample1_1.mp4")
+	ct = 0
 
-print "done!"
+	# first one
+
+	final_clips = []
+	time1 = 0
+
+	# rest
+	while(times):
+		time = times.pop(0)
+		num = ct%num_videos
+		video = getVideo(num)
+
+		clip = VideoFileClip(video).subclip(time1, time)
+		if (ct%4 == 0):
+			time1 = time1 + time
+
+		final_clips.append(clip)
+		++ct
+
+	final_clip = concatenate_videoclips(final_clips)
+
+	final_clip.write_videofile("my_concatenation.mp4")
+
+
+def getVideo(num):
+	videos = ['./catvideos/cat1.mp4', './catvideos/cat1.mp4', 
+	'./catvideos/cat1.mp4', './catvideos/cat1.mp4']
+	return videos[num]
+
+main()
