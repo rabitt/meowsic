@@ -81,8 +81,11 @@ def api_makecatvideo():
             upload_file.save(filepath)
 
     output_file = tempfile.mkstemp(suffix='.wav')
-    audio_backend.add_meow_track_to_audio(upload_file.filename, output_file)
-    return send_file_partial(output_file)
+    beats_in_seconds = audio_backend.add_meow_track_to_audio(
+        upload_file.filename, output_file)
+    # take beats to make video
+    # merge video with audio
+    return send_file_partial(output_file)  # change output_file to video file
 
 
 if __name__ == '__main__':
