@@ -6,56 +6,54 @@ def main():
 	input_file = open('./sampleinput.txt').read()
 	times = input_file.split(' ')
 
-	#not too crazy
-	times = times[0:9]
+	ct = 0
+	new_times = []
+	for i in times:
+		if (ct%2==0):
+			new_times.append(i)
+		ct = ct + 1
 
 	#hardcode num videos
-	num_videos = 3
-
-	ct = 0
-
-	# first one
-
-	final_clips = []
-
+	num_videos = 2
 
 	
-	time_start = times.pop(0)
-	time_end = float(times.pop(0)) - float(time_start)
-	#interval = times.pop(0) - time_end
-	time_start = 0
+	intervals = []
+	for i in range(0, len(new_times)-1):
+		start = float(new_times[i])
+		end = float(new_times[i+1])
+		intervals.append(end-start)
+		#ct = ct +1
 
+	print intervals
+	intervals = intervals[0:8]
 
-	#time1 = times.pop(0)
-	#time2 = float(times.pop(0)) - float(time1)
-	#print time2
+	final_clips = []
+	ct = 0					
 
-	# rest
-	while(times):
-		#time = times.pop(0)
+	while(intervals):
+
 		num = ct%num_videos
 		video = getVideo(num)
+
 		print video
 
-		print time_start, ", ", time_end
-		clip = VideoFileClip(video).subclip(time_start, time_end)
-		
-		if (ct%num_videos == 0):
-			time_start = time_end
-			time_end = float(times.pop(0)) - float(time_start)			
+		clip = VideoFileClip(video).subclip(0, intervals.pop(0))
+
 
 		final_clips.append(clip)
-		#time_start = time_end
-		++ct
 
+		ct = ct+1
+
+	print final_clips
 	final_clip = concatenate_videoclips(final_clips)
 
-	final_clip.write_videofile("my_concatenation.mp4")
-
+	final_clip.write_videofile("my_concatenation2.mp4")
+	
 
 def getVideo(num):
-	videos = ['./catvideos/cat1.mp4', './catvideos/cat2.mp4', 
-	'./catvideos/cat3.mp4']
+	videos = ['./catvideos/after.mp4', './catvideos/cat2.mp4']
+	#videos = './catvideos/cat2.mp4'
 	return videos[num]
+	#return videos
 
 main()
