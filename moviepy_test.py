@@ -1,7 +1,10 @@
 # Import everything needed to edit video clips
 from moviepy.editor import *
+import glob
 
 def main():
+	videos = glob.glob("./catvideos/*.mp4")
+	audio = AudioFileClip('./barbiegirl.mp3')
 
 	input_file = open('./sampleinput.txt').read()
 	times = input_file.split(' ')
@@ -14,7 +17,7 @@ def main():
 		ct = ct + 1
 
 	#hardcode num videos
-	num_videos = 2
+	num_videos = 4
 
 	
 	intervals = []
@@ -24,36 +27,30 @@ def main():
 		intervals.append(end-start)
 		#ct = ct +1
 
-	print intervals
 	intervals = intervals[0:8]
 
 	final_clips = []
 	ct = 0					
 
+	
 	while(intervals):
 
 		num = ct%num_videos
-		video = getVideo(num)
+		video = videos[num]
 
 		print video
 
 		clip = VideoFileClip(video).subclip(0, intervals.pop(0))
 
-
+		clip.fps = 24
 		final_clips.append(clip)
 
 		ct = ct+1
 
-	print final_clips
 	final_clip = concatenate_videoclips(final_clips)
+	final_clip = final_clip.set_audio(audio)
 
-	final_clip.write_videofile("my_concatenation2.mp4")
+	final_clip.write_videofile("conCATenate.mp4")
 	
-
-def getVideo(num):
-	videos = ['./catvideos/after.mp4', './catvideos/cat2.mp4']
-	#videos = './catvideos/cat2.mp4'
-	return videos[num]
-	#return videos
 
 main()
