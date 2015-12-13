@@ -59,3 +59,4 @@ def add_meow_track_to_audio(audio_path, output_path):
     meow_track = make_meow_track(beats_in_seconds, audio_length, fs)
     mix = y/np.max(y) + 0.4*meow_track/np.max(meow_track)
     librosa.output.write_wav(output_path, mix, fs)
+    return beats_in_seconds
