@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href = "{{ url_for('static', filename='css/bootstrap.min.css') }}" rel = "stylesheet" type = "text/css">
+
+                <link href = "{{ url_for('static', filename='css/custom.css') }}" rel = "stylesheet" type = "text/css">
+
+
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Meowsic</title>
+
+    <!-- Bootstrap -->
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+
+  <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <i class="fa fa-play-circle"></i>  <img src = "{{ url_for('static', filename='img/logo_words.png') }}" width = "80px">
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">Upload</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+     <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading"><img src = "{{ url_for('static', filename='img/logo_color_words.png') }}" width = "300px"></h1>
+                        <p class="intro-text">Upload a song and watch cats dance!</p>
+                        <a href="#about" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="container text-center" style = "padding-top:50px">
+      
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                        <h1 class="brand-heading"><img src = "{{ url_for('static', filename='img/logo_circle_black.png') }}" width = "30%"></h1>
+
+              <h4> Watch your cats dance! </h4>
+                 <form method = "POST" action="/api/makecatvideo" style = "text">
+  <input type="file" name="audio" accept="audio/*">
+  <input type="submit">
+            </div>
+        </div>
+    </section>
+
+  	   
+</form>
+
+  </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+          <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+          <script src="{{ url_for('static', filename='js/grayscale.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/ease.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>
